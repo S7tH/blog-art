@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block links %}
+    <li class="nav-item">
+        <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Description</a>
+    </li>
+{% endblock %}
+
+{% block externalinks %}
+    <li class="nav-item">
+        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link external" href="{{ path('contact') }}"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div id="tm-section-1" class="tm-section">
+            <div class="col-md-12">
+                <h1 class="text-xs-center blue-text tm-page-2-title">{{ article.title }}</h1>
+                <p class="text-xs-center tm-page-2-p tm-page-2-subtitle">
+                    {{ article.subtitle }}
+                </p>
+                <img src="{{ asset('bundles/app/img/tm-1800x600-01.jpg') }}" class="img-fluid tm-banner-img" alt="Image">            
+            </div>
+        </div>                
+    </div>
+            
+    <div class="row">
+        <div class="tm-section" id="tm-main-section">
+            <div class="col-md-12">
+                <p class="text-left tm-description">
+                    {{ article.description|raw }}
+                </p>
+
+                <div class="tm-flex-center">
+                    <a href="{{ path('article_edit', {'id':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Modifier l'article</a>
+                    <a href="{{ path('article_delete', {'id':article.id, 'state':'confirm'}) }}" class="btn btn-default btn-lg tm-gray-btn">Supprimer l'article</a>
+                    <a href="{{ path('homepage') }}" class="btn btn-default btn-lg tm-gray-btn">Retourner à l'accueil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

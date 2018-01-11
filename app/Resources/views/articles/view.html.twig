@@ -39,8 +39,24 @@
                 </p>
 
                 <div class="tm-flex-center">
+
+                    <button data-toggle="modal" data-backdrop="false" href="#infos" class="btn btn-default btn-lg tm-gray-btn">Supprimer l'article</button>
+                    <div class="modal" id="infos">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                    <h4 class="modal-title">Êtes vous certains de vouloir supprimer définitivement cet article ?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <a href="{{ path('article_delete', {'id':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Oui supprimer cet article</a>
+                                    <button type="button" class="btn btn-default btn-lg tm-gray-btn" data-dismiss="modal">Non ne pas le supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <a href="{{ path('article_edit', {'id':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Modifier l'article</a>
-                    <a href="{{ path('article_delete', {'id':article.id, 'state':'confirm'}) }}" class="btn btn-default btn-lg tm-gray-btn">Supprimer l'article</a>
                     <a href="{{ path('homepage') }}" class="btn btn-default btn-lg tm-gray-btn">Retourner à l'accueil</a>
                 </div>
             </div>

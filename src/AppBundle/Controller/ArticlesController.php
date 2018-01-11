@@ -73,31 +73,21 @@ class ArticlesController extends Controller
     }
 
     /**
-     * @Route("/article-delete/{id}/{state}", name="article_delete")
+     * @Route("/article-delete/{id}", name="article_delete")
      * @Method({"GET", "DELETE"})
      */
-    public function deleteAction(Article $article, $state, Request $request)
+    public function deleteAction(Article $article, Request $request)
     {
-        if($state == 'confirm')
-        {
-            return $this->render('articles/delete.html.twig',
-             array(
-                'article' => $article
-            ));
-        }
-        else
-        {
-            //recover the entity manager
-            $em = $this->getDoctrine()->getManager();
+        //recover the entity manager
+        $em = $this->getDoctrine()->getManager();
 
-            //we delete our entity from the db
-            $em->remove($article);//create the request sql for deleting
-            $em->flush();//send the request and delete our object in the db
+        //we delete our entity from the db
+        $em->remove($article);//create the request sql for deleting
+        $em->flush();//send the request and delete our object in the db
 
-            $request->getSession()->getFlashBag()->add('notice', 'Trick bien supprimé.');
+        $request->getSession()->getFlashBag()->add('notice', 'Article bien supprimé.');
 
-            // We are displaying now the homepage page thanks a redirection to its route.
-            return $this->redirectToRoute('homepage');
-        }
+        // We are displaying now the homepage page thanks a redirection to its route.
+        return $this->redirectToRoute('homepage');
     }
 }

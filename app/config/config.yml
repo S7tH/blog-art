@@ -68,3 +68,17 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
+#Fos\UserBundle configuration
+fos_user:
+    db_driver: orm #type of data base that we use, here ORM doctrine
+    firewall_name: main #our firewall name
+    user_class: AppBundle\Entity\User #our entity user
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
+    registration:
+        form:
+            type: AppBundle\Form\Type\RegistrationType
+    profile:
+        form:
+            type: AppBundle\Form\Type\ProfileType

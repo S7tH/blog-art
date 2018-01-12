@@ -1,0 +1,50 @@
+
+                    <h2>Commentaires</h2>
+                    <hr class="light">
+                    <p class="text-faded">
+
+                    {# we display flash message wich name is « com » #}
+                    {% for message in app.session.flashbag.get('com') %}
+                        <p class="msg-flash">{{ message }}</p>
+                    {% endfor %}
+                      
+                    {% if commentaries is not empty %}
+                            {% for com in commentaries %}
+                                <div class="com-one row">
+                                    <div class="col-xs-12 col-sm-4">
+                                        {{ com.user.username }}
+                                    </div>
+                                    
+                                     <div class="col-xs-12 col-sm-8 com-txt">
+                                        {{ com.message }}
+                                    </div>
+                                    <div class="col-xs-12 com-date">
+                                        écrit le {{ com.date|date("d/m/Y à H:i.s", "Europe/Paris") }}
+                                    </div>
+                                    <a href="{{ path('commentary_edit', {'id':com.id, 'article':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Modifier l'article</a>
+                                    
+                                    <button data-toggle="modal" data-backdrop="false" href="#comdel{{ com.id }}" class="btn btn-default btn-lg tm-gray-btn">Supprimer le commentaire</button>
+                                    <div class="modal" id="comdel{{ com.id }}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                                    <h4 class="modal-title">Êtes vous certains de vouloir supprimer définitivement ce commentaire ?</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <a href="{{ path('commentary_delete', {'id':com.id, 'article':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Oui supprimer ce commentaire</a>
+                                                    <button type="button" class="btn btn-default btn-lg tm-gray-btn" data-dismiss="modal">Non ne pas le supprimer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="article-separation"/>
+                            {% endfor %}
+                    {% else %}
+                        <div class="com-frame col-xs-12">
+                            <p>Il n'y a aucun commentaire actuellement, soyez le premier!</p>
+                        </div>
+                    {% endif %}
+                
+    

@@ -26,7 +26,6 @@ class DefaultController extends Controller
         //recover all the entities
         $articlelist = $repository->articlelist();
 
-    
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'articlelist' => $articlelist,

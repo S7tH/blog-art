@@ -33,3 +33,15 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    # src/OC/PlatformBundle/Resources/config/services.yml
+
+    app.antispam:
+        class: AppBundle\Services\Antispam
+    
+    app.save:
+        class: AppBundle\Services\DBSave
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    app.commentaries:
+        class: AppBundle\Services\Commentaries
+        arguments: ["@doctrine.orm.entity_manager"]

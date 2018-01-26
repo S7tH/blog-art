@@ -1,0 +1,41 @@
+{% extends "::base.html.twig" %}
+
+{% block externalinks %}
+    <li class="nav-item">
+        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link external" href="{{ path('contact') }}"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div id="tm-section-1" class="tm-section">
+            <div class="col-md-12">
+        <div> 
+            {# display the flash  messages that define the bundle controllers #}
+            {% for key, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ key }}">
+                        {{ message|trans({}, 'FOSUserBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {# define this block wich will get to insert the bundle other views #}
+            {% block fos_user_content %}
+
+                {% block fos_user_security_logout %}
+                {% endblock %}
+                    
+            {% endblock fos_user_content %}
+        </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -29,7 +29,7 @@
     </head>
     <body id="top" class="home">
         <div class="container-fluid">
-
+        
             <div class="row">
                 <div class="tm-navbar-container">
                 {% block nav %}
@@ -66,6 +66,7 @@
                                 <li class="nav-item">
                                    <a class="nav-link external" href="{{ path('fos_user_security_login') }}"><i class="fa fa-heartbeat" aria-hidden="true"></i> se connecter</a>
                                 </li>
+                                
                                 <li class="nav-item">
                                    <a class="nav-link external" href="{{ path('fos_user_registration_register') }}"><i class="fa fa-users" aria-hidden="true"></i> s'inscrire</a>
                                 </li>
@@ -83,7 +84,12 @@
                 <!-- footer -->
                 <footer class="tm-footer" id="bottom">                
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <p class="text-xs-center tm-footer-text">Copyright &copy; {{ "now"|date("Y") }} Eloïne's Arts</p>                    
+                        <p class="text-xs-center tm-footer-text">Copyright &copy; {{ "now"|date("Y") }} Eloïne's Arts</p> 
+
+                        {#<div id="status"></div>
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>#}
+
                     </div>                
                 </footer>  
             </div> <!-- row -->
@@ -101,105 +107,9 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 
+        <script src="{{ asset('bundles/app/js/template.js') }}"></script>
         
-        <!-- Templatemo scripts -->
-        <script>     
-       
-            $(document).ready(function(){
-
-                var mobileTopOffset = 54;
-                var desktopTopOffset = 80;
-                var topOffset = desktopTopOffset;
-
-                if($(window).width() <= 767) {
-                    topOffset = mobileTopOffset;
-                }
-                
-                /* Single page nav
-                -----------------------------------------*/
-                $('#tmNavbar').singlePageNav({
-                   'currentClass' : "active",
-                    offset : topOffset,
-                    'filter': ':not(.external)'
-                }); 
-
-                /* Handle nav offset upon window resize
-                -----------------------------------------*/
-                $(window).resize(function(){
-                    if($(window).width() <= 767) {
-                        topOffset = mobileTopOffset;
-                    } 
-                    else {
-                        topOffset = desktopTopOffset;
-                    }
-
-                    $('#tmNavbar').singlePageNav({
-                        'currentClass' : "active",
-                        offset : topOffset,
-                        'filter': ':not(.external)'
-                    });
-                });
-                
-
-                /* Collapse menu after click 
-                -----------------------------------------*/
-                $('#tmNavbar a').click(function(){
-                    $('#tmNavbar').collapse('hide');
-                });
-
-                /* Turn navbar background to solid color starting at section 2
-                ---------------------------------------------------------------*/
-                var target = $("#tm-main-section").offset().top - topOffset;
-
-                if($(window).scrollTop() >= target) {
-                    $(".tm-navbar-container").addClass("bg-inverse");
-                }
-                else {
-                    $(".tm-navbar-container").removeClass("bg-inverse");
-                }
-
-                $(window).scroll(function(){
-                   
-                    if($(this).scrollTop() >= target) {
-                        $(".tm-navbar-container").addClass("bg-inverse");
-                    }
-                    else {
-                        $(".tm-navbar-container").removeClass("bg-inverse");
-                    }
-                });
-
-
-                /* Smooth Scrolling
-                 * https://css-tricks.com/snippets/jquery/smooth-scrolling/
-                --------------------------------------------------------------*/
-                $('a[href*="#"]:not([href="#"])').click(function() {
-                    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
-                        && location.hostname == this.hostname) {
-                        
-                        var target = $(this.hash);
-                        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                        
-                        if (target.length) {
-                            
-                            $('html, body').animate({
-                                scrollTop: target.offset().top - topOffset
-                            }, 1000);
-                            return false;
-                        }
-                    }
-                }); 
-
-              
-                /* Magnific pop up
-                ------------------------- */
-                $('.tm-gallery-imgbck').magnificPopup({
-                    delegate: 'a', // child items selector, by clicking on it popup will open
-                    type: 'image',
-                    gallery: {enabled:true}            
-                });            
-            });
-
-        </script>
+        {#<script src="{{ asset('bundles/app/js/facebook-login.js') }}"></script>#}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

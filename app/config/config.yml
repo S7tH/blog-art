@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        facebook_client_id: '%facebook_client_id%'
 
 # Doctrine Configuration
 doctrine:
@@ -68,10 +70,12 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
+
+
 #Fos\UserBundle configuration
 fos_user:
     db_driver: orm #type of data base that we use, here ORM doctrine
-    firewall_name: main #our firewall name
+    firewall_name: secured_area #our firewall name
     user_class: AppBundle\Entity\User #our entity user
     from_email:
         address: "%mailer_user%"
@@ -82,3 +86,19 @@ fos_user:
     profile:
         form:
             type: AppBundle\Form\Type\ProfileType
+
+hwi_oauth:
+    connect:
+        account_connector: hwifos_user_provider
+    firewall_name: secured_area
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook:    facebook_id
+    resource_owners:
+        facebook:
+            type:          facebook
+            client_id:     "%facebook_client_id%"
+            client_secret: "%facebook_client_secret%"
+            scope:         "email"
+

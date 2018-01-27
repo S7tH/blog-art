@@ -94,11 +94,12 @@ hwi_oauth:
     fosub:
         username_iterations: 30
         properties:
-            facebook:    facebook_id
+            facebook_id:    facebook_id
     resource_owners:
         facebook:
             type:          facebook
             client_id:     "%facebook_client_id%"
             client_secret: "%facebook_client_secret%"
-            scope:         "email"
+            scope:         "public_profile, email"
+
 

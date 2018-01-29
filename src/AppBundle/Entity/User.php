@@ -26,20 +26,25 @@ class User extends BaseUser
     protected $id;
 
     /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
-    protected $facebook_id;
+    protected $facebookId;
 
     /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
-    protected $facebook_access_token;
+    protected $facebookAccessToken;
+
+    /** @ORM\Column(name="google_id", type="string", length=255, nullable=true) */
+    protected $googleId;
+
+    /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
+    protected $googleAccessToken;
 
     
-
     /**
-     * @param string $facebook_id
+     * @param string $facebookId
      * @return User
      */
     public function setFacebookId($facebookId)
     {
-        $this->facebook_id = $facebookId;
+        $this->facebookId = $facebookId;
 
         return $this;
     }
@@ -49,16 +54,16 @@ class User extends BaseUser
      */
     public function getFacebookId()
     {
-        return $this->facebook_id;
+        return $this->facebookId;
     }
 
     /**
-     * @param string $facebook_access_token
+     * @param string $facebookAccessToken
      * @return User
      */
     public function setFacebookAccessToken($facebookAccessToken)
     {
-        $this->facebook_access_token = $facebookAccessToken;
+        $this->facebookAccessToken = $facebookAccessToken;
 
         return $this;
     }
@@ -68,6 +73,44 @@ class User extends BaseUser
      */
     public function getFacebookAccessToken()
     {
-        return $this->facebook_access_token;
+        return $this->facebookAccessToken;
+    }
+
+    /**
+     * @param string $googleId
+     * @return User
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param string $googleAccessToken
+     * @return User
+     */
+    public function setGoogleAccessToken($googleAccessToken)
+    {
+        $this->googleAccessToken = $googleAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleAccessToken()
+    {
+        return $this->googleAccessToken;
     }
 }

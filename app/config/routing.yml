@@ -34,9 +34,6 @@ hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /login
 
-facebook_login:
-    path: /login/check-facebook
-
 ckfinder_connector:
     resource: "@CKSourceCKFinderBundle/Resources/config/routing.yml"
     prefix:   /

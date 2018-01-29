@@ -95,11 +95,16 @@ hwi_oauth:
         username_iterations: 30
         properties:
             facebook_id:    facebook_id
+            google: google_id
     resource_owners:
         facebook:
             type:          facebook
             client_id:     "%facebook_client_id%"
             client_secret: "%facebook_client_secret%"
             scope:         "public_profile, email"
-
+        google:
+            type:                google
+            client_id:           "%google_client_id%"
+            client_secret:       "%google_client_secret%"
+            scope:               "email profile"
 

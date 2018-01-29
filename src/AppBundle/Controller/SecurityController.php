@@ -30,13 +30,14 @@ class SecurityController extends BaseSecurity
     protected function renderLogin(array $data)
     {
         //facebook login
-        $clientId = $this->container->getParameter('facebook_client_id');
-        $clientSecret = $this->container->getParameter('facebook_client_secret');
-        $redirectUrl = $this->generateUrl('check_facebook', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-        $loginUrl = $this->container->get('facebook.call')->createFbLink($clientId, $clientSecret, $redirectUrl);
-        //end facebook
+        $loginFbUrl = $this->container->get('socials.call')->createFbLink();
         //add the loginUrl to our array
-        $data['loginUrl'] = $loginUrl;
+        $data['loginFbUrl'] = $loginFbUrl;
+
+        //google login
+        $loginGoogUrl = $this->container->get('socials.call')->createGoogLink();
+        //add the loginUrl to our array
+        $data['loginGoogUrl'] = $loginGoogUrl;
 
         return $this->render('@FOSUser/Security/login.html.twig', $data);
     }
@@ -47,6 +48,15 @@ class SecurityController extends BaseSecurity
      * @Method({"GET", "POST"})
      */
     public function checkFacebookAction()
+    {
+        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+    }
+
+    /**
+     * @Route("/login/check-google", name="check_google")
+     * @Method({"GET", "POST"})
+     */
+    public function checkGoogleAction()
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }

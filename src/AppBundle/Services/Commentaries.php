@@ -34,7 +34,3 @@ class Commentaries
         return $commentary;
     }
 }
-
-
-
-

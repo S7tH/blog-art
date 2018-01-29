@@ -5,9 +5,28 @@ namespace AppBundle\Security\Core\User;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseFOSUBProvider;
 use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use AppBundle\Services\SocialsCall;
+
 
 class FosUBUserProvider extends BaseFOSUBProvider
 {
+    /**
+     * @var SocialsCall
+     */
+    protected $socials;
+    
+
+    public function __construct(UserManagerInterface $userManager, array $properties, SocialsCall $socials)
+    {
+        $this->userManager = $userManager;
+        $this->properties = array_merge($this->properties, $properties);
+        $this->accessor = PropertyAccess::createPropertyAccessor();
+        $this->socials = $socials;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -15,25 +34,25 @@ class FosUBUserProvider extends BaseFOSUBProvider
     {
         // get property from provider configuration by provider name
         // , it will return `facebook_id` in that case (see service definition below)
-        $property = $this->getProperty($response);//"facebook_id"
-        $username = $response->getUsername(); // get the unique facebook user identifier
+        $property = $this->getProperty($response);
+        $username = $response->getUsername(); // get the unique social user identifier
        
         
         //on connect - get the access token and the user ID
-        $service = $response->getResourceOwner()->getName();//facebook
-        $setter = 'set'.ucfirst($service);//setFacebook
-        $setter_id = $setter.'Id';//setFacebookId
-        $setter_token = $setter.'AccessToken';//setFacebookAccessToken
+        $service = $response->getResourceOwner()->getName();
+        $setter = 'set'.ucfirst($service);
+        $setterId = $setter.'Id';
+        $setterToken = $setter.'AccessToken';
 
         //we "disconnect" previously connected users
-        if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) { //if facebook_id $username exist
-            $previousUser->$setter_id(null);//setFacebookId(null)
-            $previousUser->$setter_token(null);//setFacebookAccessToken(null)
+        if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) { //if facebook_id or google_id => $username exist
+            $previousUser->$setterId(null);
+            $previousUser->$setterToken(null);
             $this->userManager->updateUser($previousUser);
         }
         //we connect current user
-        $user->$setter_id($username);//setFacebookId(facebook_id)
-        $user->$setter_token($response->getAccessToken());//setFacebookAccessToken(current token)
+        $user->$setterId($username);
+        $user->$setterToken($response->getAccessToken());
         
         $this->userManager->updateUser($user);
     }
@@ -43,58 +62,17 @@ class FosUBUserProvider extends BaseFOSUBProvider
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-       
-        $username = $response->getUsername();
-        $userMail = $response->getEmail();
-        $userNick = $response->getFirstName();
+        $service = $response->getResourceOwner()->getName();
 
-        $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username)); //facebook_id => facebook_id
-
-        //when the user is registrating
-        if (null === $user) { // if any object with this facebook_id has not found, then we create this one
-            $service = $response->getResourceOwner()->getName();
-            $setter = 'set'.ucfirst($service);//setFacebook
-            $setter_id = $setter.'Id';//setFacebookId
-            $setter_token = $setter.'AccessToken';//setFacebookAccessToken
-            
-            $checkUser = $this->userManager->findUserBy(['email' => $userMail]);
-            if($checkUser)
-            {
-                $checkUser->$setter_id($username);
-                $checkUser->$setter_token($response->getAccessToken());
-                $this->userManager->updateUser($checkUser);
-                return $checkUser;
-            }
-            else
-            {        
-                $ContentString = 'aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTwWxXyYzZ0123456789';
-                $mix = str_shuffle($ContentString);
-                $password = hash('sha256', substr($mix,0,10));
-                $salt = hash('sha256', substr($mix,0,42));
-                // create new user here
-                $user = $this->userManager->createUser();
-                $user->setUsername($userNick);
-                $user->setUsernameCanonical(strtoupper($userNick));
-                $user->setEmail($userMail);
-                $user->setEmailCanonical(strtoupper($userMail));
-                $user->setSalt($salt);
-                $user->setEnabled(true);
-                $user->setPassword($password);
-                $user->setRoles(['ROLE_USER']);
-
-                $user->$setter_id($username);
-                $user->$setter_token($response->getAccessToken());
-            
-                $this->userManager->updateUser($user);
-                return $user;
-            }   
+        if($service === "facebook")
+        {
+            //facebook user
+            return $user = $this->socials->fbProfil($this->userManager, $response);
         }
-        //if user exists - go with the HWIOAuth way
-        $user = parent::loadUserByOAuthUserResponse($response);
-        $serviceName = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
-        //update access token
-        $user->$setter($response->getAccessToken());
-        return $user;
+        else
+        {
+            //google user
+            return $user = $this->socials->googProfil($this->userManager, $response);
+        }
     }
 }

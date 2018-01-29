@@ -21,7 +21,6 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "ckfinder/ckfinder-symfony3-bundle": "^3.4",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "facebook/graph-sdk": "^5.6",

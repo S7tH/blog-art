@@ -33,7 +33,3 @@ hwi_oauth_connect:
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /login
-
-ckfinder_connector:
-    resource: "@CKSourceCKFinderBundle/Resources/config/routing.yml"
-    prefix:   /

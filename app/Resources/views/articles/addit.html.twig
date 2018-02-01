@@ -37,7 +37,7 @@
     <section id="tm-main-section" class="tm-section">
             <div class="tm-container">
                 <div class="col-xs-12 article-big-title"><h3>{% block formtitle %}{% endblock %}</h3></div>
-                
+                <button class="btn btn-primary"><a target="_blank" href="{{ path('addimgbrowser') }}"><i class="fa fa-reply-all" aria-hidden="true"></i>Uploader des images</a></button>
                 <button data-toggle="modal" data-backdrop="false" href="#imgbrowser"  class="btn btn-primary">
                     Banque d'images
                 </button>
@@ -49,14 +49,13 @@
                                 <h4 class="modal-title">Vos images :</h4>
                             </div>
                             <div class="modal-body">
-                                {#{{ render(controller('AppBundle:ImageBrowser:addInBrowser')) }}#}
-                                {#{% include('imgbrowser/imgbrowser.html.twig') %}#}
+                                {{ render(controller('AppBundle:ImageBrowser:displaybrowser')) }}
                             </div>
                         </div>  
                     </div> 
                 </div>
                 
-                <button><a target="_blank" href="{{ path('imgimport') }}"><i class="fa fa-reply-all" aria-hidden="true"></i>Uploader des images</a></button>
+                
                 {% include('articles/form.html.twig') %}
             
                 <a href="{{ path('homepage') }}" class="btn btn-primary">Retour à la liste des tâches</a>
@@ -84,22 +83,81 @@
     </script>
 
     <script>
-     /*   // Modification des informations sur le pop-up et retour sur le pop-up
+    //initAjaxForm();
+        function initAjaxForm()
+        {
+            $('body').on('submit', '.addimage', function(e)
+            {
+                e.preventDefault();
+ 
+                $.ajax(
+                {
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    enctype: 'multipart/form-data'
+                })
+                .done(function (data)
+                {
+                    if (typeof data.message !== 'undefined')
+                    {
+                        alert(data.message);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown)
+                {
+                    if (typeof jqXHR.responseJSON !== 'undefined')
+                    {
+                        if (jqXHR.responseJSON.hasOwnProperty('form'))
+                        {
+                            $('#form_body').html(jqXHR.responseJSON.form);
+                        }
+                        $('.form_error').html(jqXHR.responseJSON.message);
+                    } 
+                    else 
+                    {
+                        alert(errorThrown);
+                    }
+                });
+            });
+        }
+        /* // Modification des informations sur le pop-up et retour sur le pop-up
         $('#image_save').click(function (e) 
         {
             e.preventDefault();
 
             $.ajax(
             {
-                type:"POST",
+                type: $(this).attr('method'),
                 data: $(this).serialize(),
                 enctype: 'multipart/form-data',
-                url:"{{ url('article_new') }}",
-                dataType: "json",
+                url: $(this).attr('action'),
                 cache: false,
                 success: function(){
                 alert("success");
             }
+            .done(function (data)
+            {
+                if (typeof data.message !== 'undefined')
+                {
+                    alert(data.message);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                if (typeof jqXHR.responseJSON !== 'undefined')
+                {
+                    if (jqXHR.responseJSON.hasOwnProperty('form'))
+                    {
+                        $('#form_body').html(jqXHR.responseJSON.form);
+                    }
+                    $('.form_error').html(jqXHR.responseJSON.message);
+                } 
+                else
+                {
+                    alert(errorThrown);
+                }
+            });
         });
  
         });*/

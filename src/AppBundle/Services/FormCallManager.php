@@ -19,16 +19,41 @@ class FormCallManager
     {
         $this->formfactory = $formfactory;
         $this->save = $save;
+
     }
 
-    public function addForm($object,$type, Request $request, $typeMsg, $msg)
+    public function addForm($object,$type, Request $request, $typeMsg, $msg, $url = null)
     {
-        $form = $this->formfactory->create($type, $object);
+        if($url === null)
+        {
+            $form = $this->formfactory->create($type, $object);
+        }
+        else
+        {
+            $form = $this->formfactory->create($type, $object,array(
+                'action' => $url,
+                'method' => 'POST'));
+        }
+        
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
         {
             $this->save->contentSave($object);//save the form content
             $request->getSession()->getFlashBag()->add($typeMsg, $msg);
             return false;
+        }
+        return $form;
+    }
+
+
+    public function addAjaxForm($object,$type,$url, Request $request, $typeMsg, $msg)
+    {
+        $form = $this->createAjaxForm($object,$type,$url);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        {
+            $this->save->contentSave($object);//save the form content
+            $request->getSession()->getFlashBag()->add($typeMsg, $msg);
+            return new JsonResponse(array('message' => 'Success!'), 200);
         }
         return $form;
     }

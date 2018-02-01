@@ -1,34 +1,33 @@
-{% form_theme form "form/fields.html.twig" %}
+{% form_theme formimg "form/fields.html.twig" %}
 
 
 <div class="well">
-    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_start(formimg, {'attr': {'class': 'form-horizontal addimage'}}) }}
 
     {# general errors of the form #}
-    {{ form_errors(form) }}
+    {{ form_errors(formimg) }}
 
     <div class="form-group">
-        <p class="msg-form">Importer une image de mon pc (qui )doit être de taille absolue 640x480 et un poid de 1MB maximum)</p>
         {# label generating #}
-        {{ form_label(form.file, "Image", {'label_attr': {'class': 'adit-file col-sm-2 control-label'}}) }}
+        {{ form_label(formimg.file, "Image", {'label_attr': {'class': 'adit-file col-sm-2 control-label'}}) }}
 
         {# Displaying of errors of this field #}
-        {{ form_errors(form.file) }}
+        {{ form_errors(formimg.file) }}
 
         <div class="col-sm-10">
             {# input generating #}
-            {{ form_widget(form.file) }}
+            {{ form_widget(formimg.file) }}
         </div>
     </div>
 
   {# we just display the widget for the button #}
-  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+  {{ form_widget(formimg.save, {'attr': {'class': 'btn btn-primary'}}) }}
 
   {# auto generating of the fields wich are not read again.
      In this example, the field CSRF will be generate automatically
      and all hidden fields (type « hidden »). #}
-  {{ form_rest(form) }}
+  {{ form_rest(formimg) }}
 
   {# close the mark <form> of  HTML formulaire #}
-  {{ form_end(form) }}
+  {{ form_end(formimg) }}
 </div>

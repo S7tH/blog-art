@@ -1,3 +1,19 @@
-{% for img in images %} 
-    <img src="{{ asset(img.webPath) }}" alt="{{ img.alt }}">
-{% endfor %}
+
+    <div class="row">
+        <section id="tm-main-section" class="tm-section">
+            <div class="tm-container text-xs-center"> 
+                {% for img in images %} 
+                    <div class="tm-gallery-img-container">
+                       
+                            <img src="{{ asset(img.webPath) }}" alt="{{ img.alt }}" class="img-fluid tm-gallery-img"> <!-- 300x200 -->
+
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div> <!-- row -->
+
+
+
+

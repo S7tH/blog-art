@@ -11,6 +11,8 @@ use AppBundle\Entity\Article;
 use AppBundle\Form\Type\ArticleType;
 use AppBundle\Entity\Commentary;
 use AppBundle\Form\Type\CommentaryType;
+use AppBundle\Entity\Image;
+use AppBundle\Form\Type\ImageType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -47,16 +49,12 @@ class ArticlesController extends Controller
      */
     public function addAction(Request $request)
     {
-        $images = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findAll();
-                
         $form = $this->container->get('formcall.manager')
                      ->addForm($article = new Article(),$type = ArticleType::class,$request, $typeMsg = 'notice',$msg = 'Article bien enregistré.');
         if(!$form){return $this->redirectToRoute('homepage');}
         
-        return $this->render('articles/add.html.twig',
-        array('form' => $form->createView(),
-               'images' => $images,)
-            );
+        return $this->render('articles/add.html.twig',array(
+                'form' => $form->createView(),));
     }
 
     /**

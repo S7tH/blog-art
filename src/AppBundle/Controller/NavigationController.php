@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use AppBundle\Entity\Article;
 
-class DefaultController extends Controller
+class NavigationController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -18,15 +18,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         //recover the repository
-        $repository = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Article')
-        ;
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Article');
     
         //recover all the entities
         $articlelist = $repository->articlelist();
 
-        return $this->render('default/index.html.twig', array(
+        return $this->render('navigation/index.html.twig', array(
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'articlelist' => $articlelist,
         ));
@@ -38,7 +35,7 @@ class DefaultController extends Controller
      */
     public function galleryAction()
     {
-        return $this->render('default/gallery.html.twig');
+        return $this->render('navigation/gallery.html.twig');
     }
 
     /**
@@ -47,6 +44,6 @@ class DefaultController extends Controller
      */
     public function contactAction()
     {
-        return $this->render('default/contact.html.twig');
+        return $this->render('navigation/contact.html.twig');
     }
 }

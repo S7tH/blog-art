@@ -32,11 +32,31 @@
     </div>                
 </div>
 
+
 <div class="row">
     <section id="tm-main-section" class="tm-section">
             <div class="tm-container">
                 <div class="col-xs-12 article-big-title"><h3>{% block formtitle %}{% endblock %}</h3></div>
-
+                
+                <button data-toggle="modal" data-backdrop="false" href="#imgbrowser"  class="btn btn-primary">
+                    Banque d'images
+                </button>
+                <div class="modal" id="imgbrowser">
+                    <div class="modal-dialog">  
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">x</button>
+                                <h4 class="modal-title">Vos images :</h4>
+                            </div>
+                            <div class="modal-body">
+                                {#{{ render(controller('AppBundle:ImageBrowser:addInBrowser')) }}#}
+                                {#{% include('imgbrowser/imgbrowser.html.twig') %}#}
+                            </div>
+                        </div>  
+                    </div> 
+                </div>
+                
+                <button><a target="_blank" href="{{ path('imgimport') }}"><i class="fa fa-reply-all" aria-hidden="true"></i>Uploader des images</a></button>
                 {% include('articles/form.html.twig') %}
             
                 <a href="{{ path('homepage') }}" class="btn btn-primary">Retour à la liste des tâches</a>
@@ -46,6 +66,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    
     <script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
 
     <script>
@@ -62,4 +83,25 @@
         CKEDITOR.plugins.addExternal( 'videoembed', '{{ asset('bundles/app/ckeditor/plugins/videoembed/')}}', 'plugin.js' );
     </script>
 
+    <script>
+     /*   // Modification des informations sur le pop-up et retour sur le pop-up
+        $('#image_save').click(function (e) 
+        {
+            e.preventDefault();
+
+            $.ajax(
+            {
+                type:"POST",
+                data: $(this).serialize(),
+                enctype: 'multipart/form-data',
+                url:"{{ url('article_new') }}",
+                dataType: "json",
+                cache: false,
+                success: function(){
+                alert("success");
+            }
+        });
+ 
+        });*/
+    </script>
 {% endblock %}

@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Image
  *
  * @ORM\Table(name="image")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Image
@@ -48,10 +48,9 @@ class Image
     /** 
      * @var UploadedFile
      *
-     * @Assert\Image(maxSize=1000000, maxWidth=640,minWidth=640, maxHeight= 480, minHeight= 480)
      */
     private $file;
-
+   
     /*attribut for save temporarily the name of file
     before deleting of trick with this file.*/
     private $tempFilename;
@@ -142,7 +141,6 @@ class Image
         }
     }
  
-
     /**
     * @ORM\PrePersist()
     * @ORM\PreUpdate()
@@ -168,7 +166,7 @@ class Image
     */
     public function upload()
     {
-        // if there isn't any file  
+        // if there isn't any file we do anything
         if (null === $this->file)
         {
              return;
@@ -186,8 +184,8 @@ class Image
 
         // we are moving the send file in the repository of our choice.
         $this->file->move(
-        $this->getUploadRootDir(), // The repository of destination
-        $this->id.'.'.$this->url   // the name of file to create, here « id.extension »
+            $this->getUploadRootDir(), // The repository of destination
+            $this->id.'.'.$this->url   // the name of file to create, here « id.extension »
         );
     }
 
@@ -222,7 +220,7 @@ class Image
     protected function getUploadRootDir()
     {
         // we return the relative path to the image for our PHP code
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
     }
 
     //method for write only WebPath for url as var on our Twig view

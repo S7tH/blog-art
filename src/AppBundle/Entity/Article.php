@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Article
@@ -63,9 +64,18 @@ class Article
     private $dateUpdate;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
+     */
+    private $images;
+
+
     public function __construct()
     {
         $this->date = new \Datetime();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -196,6 +206,23 @@ class Article
     public function getDateUpdate()
     {
         return $this->dateUpdate;
+    }
+
+    // we add only one image per time
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+    }
+
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    // we recover the images list
+    public function getImages()
+    {
+        return $this->images;
     }
 }
 

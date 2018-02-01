@@ -22,19 +22,16 @@ class ArticlesController extends Controller
      */
     public function viewAction(Article $article, Request $request)
     {
-        $service = $this->container->get('app.commentaries');
-        $commentaries = $service->viewcom($article);
+        $serviceCom = $this->container->get('app.commentaries');
+        $commentaries = $serviceCom->viewcom($article);
 
-        $user = $this->getUser();//we recover the user instance for our commentary
-        $commentary = $service->addcom($article, $user);
+        //we recover the user instance for our commentary by $this->getUser()
+        $commentary = $serviceCom->addcom($article, $this->getUser());
+
+        $form = $this->container->get('formcall.manager')
+                     ->addForm($commentary ,$type = CommentaryType::class,$request, $typeMsg = 'com',$msg = 'Votre commentaire, a bien été enregistré.');
+        if(!$form){return $this->redirect($this->generateUrl('article', array('id' => $article->getId() )));}
     
-        $form = $this->get('form.factory')->create(CommentaryType::class, $commentary);
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
-        {
-            $this->container->get('app.save')->contentSave($commentary);//save the form content
-            $request->getSession()->getFlashBag()->add('com', 'Votre commentaire, a bien été enregistré.');
-            return $this->redirect($this->generateUrl('article', array('id' => $article->getId() )));
-        }
         return $this->render('articles/view.html.twig', array(
             'article' => $article,
             'id' => $article->getId(),
@@ -50,16 +47,16 @@ class ArticlesController extends Controller
      */
     public function addAction(Request $request)
     {
-        $article = new Article();
-        $form = $this->get('form.factory')->create(ArticleType::class, $article);
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
-        {
-                $this->container->get('app.save')->contentSave($article);//save the form content
-                $request->getSession()->getFlashBag()->add('notice', 'Article bien enregistré.');
-                return $this->redirectToRoute('homepage');
-        }
+        $images = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findAll();
+                
+        $form = $this->container->get('formcall.manager')
+                     ->addForm($article = new Article(),$type = ArticleType::class,$request, $typeMsg = 'notice',$msg = 'Article bien enregistré.');
+        if(!$form){return $this->redirectToRoute('homepage');}
+        
         return $this->render('articles/add.html.twig',
-        array('form' => $form->createView(),));
+        array('form' => $form->createView(),
+               'images' => $images,)
+            );
     }
 
     /**
@@ -69,14 +66,10 @@ class ArticlesController extends Controller
      */
     public function editAction(Article $article, Request $request )
     {
-        $form = $this->get('form.factory')->create(ArticleType::class, $article);
+        $form = $this->container->get('formcall.manager')
+                     ->addForm($article ,$type = ArticleType::class,$request, $typeMsg = 'notice',$msg = 'Article bien modifié et enregistré.');
+        if(!$form){return $this->redirectToRoute('homepage');}
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())//if a form has been send so we are not displaying the form but send the form and if the values are ok
-        {
-            $this->container->get('app.save')->contentSave($article);//save the form content
-            $request->getSession()->getFlashBag()->add('notice', 'Article bien modifié et enregistré.');
-            return $this->redirectToRoute('homepage');
-        }
         return $this->render('articles/edit.html.twig',
         array('form' => $form->createView(),));
     }
@@ -87,18 +80,10 @@ class ArticlesController extends Controller
      */
     public function comEditAction(Commentary $commentary, $article, Request $request )
     {
-        $form = $this->get('form.factory')->create(CommentaryType::class, $commentary);
+        $form = $this->container->get('formcall.manager')
+                     ->addForm($commentary ,$type = CommentaryType::class,$request, $typeMsg = 'com',$msg = 'Votre commentaire, a bien été modifié.');
+        if(!$form){return $this->redirectToRoute('article',array('id' => $article));}
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())//if a form has been send so we are not displaying the form but send the form and if the values are ok
-        {
-            $this->container->get('app.save')->contentSave($commentary);//save the form content
-            $request->getSession()->getFlashBag()->add('com', 'Votre commentaire, a bien été modifié.');
-            
-            return $this->redirectToRoute('article',array(
-                'id' => $article
-                )
-            );
-        }
         return $this->render('commentaries/edit.html.twig',
         array('form' => $form->createView(),));
     }

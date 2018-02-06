@@ -109,10 +109,11 @@ hwi_oauth:
             scope:               "email profile"
 
 ivory_ck_editor:
+    base_path: "ckeditor"
+    js_path:   "ckeditor/ckeditor.js"
     default_config : elo_config
     configs:
         elo_config:
-            toolbar: "full"
             language: fr
             skin: 'moono-dark'
-            extraPlugins: 'videodetector,youtube,video,videoembed'
+            extraPlugins: 'youtube,video,videoembed,videodetector'

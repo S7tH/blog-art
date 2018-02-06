@@ -109,6 +109,10 @@ hwi_oauth:
             scope:               "email profile"
 
 ivory_ck_editor:
-    default_config: default
+    default_config : elo_config
     configs:
-        default:
+        elo_config:
+            toolbar: "full"
+            language: fr
+            skin: 'moono-dark'
+            extraPlugins: 'videodetector,youtube,video,videoembed'

@@ -33,3 +33,7 @@ hwi_oauth_connect:
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /login
+
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+     

@@ -27,6 +27,7 @@
         "facebook/graph-sdk": "^5.6",
         "friendsofsymfony/user-bundle": "^2.0",
         "google/apiclient": "^2.2",
+        "helios-ag/fm-elfinder-bundle": "^7.0",
         "hwi/oauth-bundle": "^0.6.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "php-http/guzzle6-adapter": "^1.1",
@@ -60,7 +61,8 @@
         ]
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "component-dir": "web/assets"
     },
     "extra": {
         "symfony-app-dir": "app",

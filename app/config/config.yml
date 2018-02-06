@@ -108,6 +108,26 @@ hwi_oauth:
             client_secret:       "%google_client_secret%"
             scope:               "email profile"
 
+fm_elfinder:
+    assets_path: assets # default is '/assets', you can replace it with '/awb/web/assets' in you case
+    instances:
+        ckeditor:
+            locale: "%locale%" # defaults to current request locale
+            editor: ckeditor # other options are tinymce, tinymce4, form, custom and simple
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            theme: blitzer
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        show_hidden: false # defaults to false
+                        driver: LocalFileSystem
+                        path: uploads/img/
+                        upload_allow:     ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'application/zip', 'audio/mpeg', 'text/csv', 'video/mp4', 'video/webm', 'application/pdf']
+                        upload_deny:      ['all']
+                        upload_max_size:  8M
+
 ivory_ck_editor:
     base_path: "ckeditor"
     js_path:   "ckeditor/ckeditor.js"
@@ -117,3 +137,6 @@ ivory_ck_editor:
             language: fr
             skin: 'moono-dark'
             extraPlugins: 'youtube,video,videoembed,videodetector'
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters:
+                instance: ckeditor

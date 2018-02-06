@@ -526,4 +526,9 @@ body.page-2 { padding-top: 80px; }
 		min-height: 600px;
 	}
 }
+.hidden-iframe
+{
+	visibility:hidden;
+	height: 0px;
+}
 

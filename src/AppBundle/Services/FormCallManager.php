@@ -22,17 +22,24 @@ class FormCallManager
 
     }
 
-    public function addForm($object,$type, Request $request, $typeMsg, $msg, $url = null)
+    public function addForm($object,$type, Request $request, $typeMsg, $msg, $url = null, $method = null, $target =null)
     {
         if($url === null)
         {
             $form = $this->formfactory->create($type, $object);
         }
+        else if($target === null)
+        {
+            $form = $this->formfactory->create($type, $object,array(
+                'action' => $url,
+                'method' => $method));
+        }
         else
         {
             $form = $this->formfactory->create($type, $object,array(
                 'action' => $url,
-                'method' => 'POST'));
+                'method' => $method,
+                'attr' => ['target' => $target]));
         }
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())

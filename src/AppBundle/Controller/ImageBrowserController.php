@@ -15,16 +15,30 @@ use AppBundle\Form\Type\ImageType;
 class ImageBrowserController extends Controller
 {
     /**
-     * @Route("/image-browser", name="imgbrowser")
+     * @Route("/displayimage-browser", name="displayimgbrowser")
      * @Method({"GET"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function displayBrowserAction(Request $request)
+    public function displaybrowserAction(Request $request)
     {
         $images = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findAll();
+
+        if($request->get('nbrImg') !== null)
+        {
+            $currentImg = $request->get('nbrImg');
+
+            if($currentImg.length() !== $images.lenght())
+            {
+                //send the response in Ajax
+                $response = new Response(json_encode($nombreObjetsEnBase));
+                $response->headers->set('Content-Type', 'application/json');
+ 
+                return $response;
+            }
+        }
         
-        return $this->render('imgbrowser/imgbrowser.html.twig',
-        array('images' => $images,));
+        return $this->render('imgbrowser/displaybrowser.html.twig',
+        array('images' => $images));
     }
 
     /**
@@ -34,14 +48,13 @@ class ImageBrowserController extends Controller
      */
     public function addbrowserAction(Request $request)
     {
-        $images = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findAll();
-        
         $form = $this->container->get('formcall.manager')
-                     ->addForm($image = new Image(),$type = ImageType::class,$request, $typeMsg = 'notice',$msg = 'Image bien enregistré.', $url = $this->generateUrl('addimgbrowser'));
+                     ->addForm($image = new Image(),$type = ImageType::class,$request, $typeMsg = 'notice',$msg = 'Image bien enregistré.', $url = $this->generateUrl('addimgbrowser'), $method = 'POST', $target = 'uploadFrame');
         if(!$form){return $this->redirectToRoute('addimgbrowser');}
         return $this->render('imgbrowser/addbrowser.html.twig',
-        array('images' => $images,'formimg' => $form->createView(),));
+        array('formimg' => $form->createView(),));
     }
+
 
     /**
      * @Route("/image-import-ajax", name="imgimportajax")

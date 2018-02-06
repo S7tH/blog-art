@@ -1,0 +1,71 @@
+    <div class="row">
+        <section id="tm-main-section" class="tm-section">
+            <div class="tm-container text-xs-center" id="imglist"> 
+            <button id="galrefresh"class="btn btn-primary">rafraichir la gallerie d'images</button>
+                {% for img in images %}
+                <div id="bank"> 
+                    <div class="tm-gallery-img-container">
+                        
+                            <a href="#">
+                                <img src="{{ asset(img.webPath) }}" alt="{{ img.alt }}" class="img-fluid tm-gallery-img"> <!-- 300x200 -->
+                            </a>
+                      
+                        <div class="tm-gallery-desc">
+                            <a href="{{ path('homepage') }}"><span>{{ img.alt }}</span></a>
+                        </div>   
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div> <!-- row -->
+
+<script>
+    // Affichage du formulaire sur le pop-up
+$('#galrefresh').click(function(e)
+{
+    //e.preventDefault(); 
+    var nbrImg = images|lenght();
+    $.ajax({
+        type: 'GET',
+        url: '{{ path('displayimgbrowser') }}',
+        data: nbrImg,
+	    success: function(data) {
+            nbrImg = data.lenght();
+                //$("#id-xxxxx").html(data);
+                $('#bank')
+                .empty()
+                .append(data);			
+        }
+    });
+});
+</script>
+
+ 
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+    var nbrImg = images|lenght();
+    var valueOnline= function()
+    {
+	    $.ajax(
+	    { 
+		    type: 'GET',
+		    url: '{{ path('displayimgbrowser') }}',
+            data: nbrImg,
+		    success: function(data) 
+            {
+                nbrImg = data.lenght();
+                //$("#id-xxxxx").html(data);
+                $('#bank').html(data);
+                //.empty()
+                //.append(data);			
+            }
+	    });
+        setInterval(valueOnline, 5000);    // toutes les 5 secondes
+
+        setInterval(valueOnline(), 5000);    // toutes les 5 secondes
+    }
+});
+</script>

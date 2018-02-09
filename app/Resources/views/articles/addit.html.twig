@@ -32,53 +32,11 @@
     </div>                
 </div>
 
-
 <div class="row">
     <section id="tm-main-section" class="tm-section">
             <div class="tm-container">
                 <div class="col-xs-12 article-big-title"><h3>{% block formtitle %}{% endblock %}</h3></div>
-                <button class="btn btn-primary"><a target="_blank" href="{{ path('addimgbrowser') }}"><i class="fa fa-reply-all" aria-hidden="true"></i>Uploader des images</a></button>
-                <button data-toggle="modal" data-backdrop="false" href="#addimgbrowser"  class="btn btn-primary">
-                    Upload d'images
-                </button>
-                <div class="modal" id="addimgbrowser">
-                    <div class="modal-dialog">  
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">x</button>
-                                <h4 class="modal-title">Vos images :</h4>
-                            </div>
-                            <div class="modal-body">
-                                {{ render(controller('AppBundle:ImageBrowser:addbrowser')) }}
-                                <div class="hidden-iframe">{# necessary to upload an image in an another address than its origin one while Ajax don't accept upload enctype type#}
-                                    <iframe id="uploadFrame" name="uploadFrame" class="hidden-element" src="{{ path('addimgbrowser') }}"></iframe>
-                                </div>
-                            </div>
-                        </div>  
-                    </div> 
-                </div>
-
-               <button data-toggle="modal" data-backdrop="false" href="#imgbrowser"  class="btn btn-primary">
-                    Banque d'images
-                </button>
-                <div class="modal" id="imgbrowser">
-                    <div class="modal-dialog">  
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">x</button>
-                                <h4 class="modal-title">Vos images :</h4>
-                            </div>
-                            <div class="modal-body">
-                                {{ render(controller('AppBundle:ImageBrowser:displaybrowser')) }}
-
-                            </div>
-                        </div>  
-                    </div> 
-                </div>
-
-                
-                
-                
+                                
                 {% include('articles/form.html.twig') %}
             
                 <a href="{{ path('homepage') }}" class="btn btn-primary">Retour à la liste des tâches</a>
@@ -86,26 +44,3 @@
     </section>
 </div>
 {% endblock %}
-
-
- {# ckeditor CDN version
- 
- {% block javascripts %}
-    
-   <script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
-
-    <script>
-        CKEDITOR.replace('article[description]',{
-            skin: 'moono-dark,{{ asset('bundles/app/ckeditor/skins/moono-dark/')}}',
-            customConfig: '{{ asset('bundles/app/ckeditor/config.js')}}',
-            extraPlugins: 'youtube,video,videoembed'
-        });
-    </script>
-
-    <script>
-        CKEDITOR.plugins.addExternal( 'youtube', '{{ asset('bundles/app/ckeditor/plugins/youtube/')}}', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'video', '{{ asset('bundles/app/ckeditor/plugins/video/')}}', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'videoembed', '{{ asset('bundles/app/ckeditor/plugins/videoembed/')}}', 'plugin.js' );
-    </script>
-
-{% endblock %}#}

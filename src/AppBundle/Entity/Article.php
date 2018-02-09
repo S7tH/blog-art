@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Article
@@ -65,17 +64,16 @@ class Article
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     * @Assert\Valid()
+     * @var string
+     *
+     * @ORM\Column(name="main_image", type="string", length=255, nullable=true)
      */
-    private $images;
+    private $mainImage;
 
-
+    
     public function __construct()
     {
         $this->date = new \Datetime();
-        $this->images = new ArrayCollection();
     }
 
     /**
@@ -208,21 +206,32 @@ class Article
         return $this->dateUpdate;
     }
 
-    // we add only one image per time
-    public function addImage(Image $image)
+
+    /**
+     * Get mainImage
+     *
+     * @return string
+     */
+    public function getMainImage()
     {
-        $this->images[] = $image;
+        return $this->mainImage;
     }
 
-    public function removeImage(Image $image)
+    /**
+     * Set mainImage
+     *
+     * @param string $mainImage
+     *
+     * @return Article
+     */
+    public function setMainImage($mainImage)
     {
-        $this->images->removeElement($image);
-    }
+        $this->mainImage = $mainImage;
 
-    // we recover the images list
-    public function getImages()
-    {
-        return $this->images;
+        return $this;
     }
 }
+
+
+
 

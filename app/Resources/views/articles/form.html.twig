@@ -7,6 +7,19 @@
   {# general errors of the form #}
   {{ form_errors(form) }}
 
+  <div class="form-group">
+    {# label generating #}
+    {{ form_label(form.mainImage, "Image principale", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+    {# Displaying of errors of this field #}
+    {{ form_errors(form.mainImage) }}
+
+    <div class="col-sm-10">
+      {# input generating #}
+      {{ form_widget(form.mainImage, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
   {# the same thing for an another field  #}
   <div class="form-group">
     {# label generating #}

@@ -27,7 +27,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body id="top" class="home">
+    <body id="top" class="home" onselectstart="return false" oncontextmenu="return false" ondragstart="return false">
         <div class="container-fluid">
         
             <div class="row">
@@ -85,11 +85,6 @@
                 <footer class="tm-footer" id="bottom">                
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <p class="text-xs-center tm-footer-text">Copyright &copy; {{ "now"|date("Y") }} Eloïne's Arts</p> 
-
-                        {#<div id="status"></div>
-                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                        </fb:login-button>#}
-
                     </div>                
                 </footer>  
             </div> <!-- row -->

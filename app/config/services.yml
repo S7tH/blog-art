@@ -38,6 +38,10 @@ services:
     app.antispam:
         class: AppBundle\Services\Antispam
     
+    app.contact_mailer:
+        class: AppBundle\Services\ContactMailer
+        arguments: ["@form.factory","@mailer"]
+    
     app.save:
         class: AppBundle\Services\DBSave
         arguments: ["@doctrine.orm.entity_manager"]
@@ -57,3 +61,4 @@ services:
     formcall.manager:
         class: AppBundle\Services\FormCallManager
         arguments: ["@form.factory","@app.save"]
+

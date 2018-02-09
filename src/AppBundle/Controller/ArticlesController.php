@@ -11,8 +11,6 @@ use AppBundle\Entity\Article;
 use AppBundle\Form\Type\ArticleType;
 use AppBundle\Entity\Commentary;
 use AppBundle\Form\Type\CommentaryType;
-use AppBundle\Entity\Image;
-use AppBundle\Form\Type\ImageType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 

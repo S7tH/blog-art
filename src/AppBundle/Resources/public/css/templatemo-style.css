@@ -262,9 +262,11 @@ button:focus { outline: none; }
 
 .tm-news-item:last-child { margin-bottom: 0; }
 
-.tm-news-item-img {	margin: 0 auto; }
+.tm-news-item-img {	margin: 0 auto; height: 300px}
 
-.tm-news-item-img-container { padding: 0; }
+.tm-news-item-img-container { padding: 0; background-color:black; padding: 1em;
+	margin: 0 auto;
+	max-width: 600px;}
 
 .tm-news-container {
 	background-color: white;

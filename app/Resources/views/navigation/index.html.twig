@@ -46,15 +46,19 @@
 
         <div id="tm-main-section" class="tm-section">
             <div class="tm-container tm-container-wide">
-
             {% if articlelist is empty %}
                 <p class="msg-flash"> Il n y a pas encore de contenu </p>
             {% else %}
                 {% for article in articlelist %}
+                
                     <div class="tm-news-item">
                          
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 {% if loop.index0 % 2 %}flex-order-2{% endif %} tm-news-item-img-container">
-                            <img src="{{ asset('bundles/app/img/tm-600x300-02.jpg') }}" alt="Image" class="img-fluid tm-news-item-img">
+                           {% if article.mainImage != null %}
+                                <img src="{{  asset(article.mainImage) }}" alt="" class="img-fluid tm-news-item-img"> 
+                            {% else %}
+                                <img src="{{ asset('bundles/app/img/tm-600x300-02.jpg') }}" alt="Image" class="img-fluid tm-news-item-img">      
+                            {% endif %}    
                         </div>
                         
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-news-container flex-order-1">

@@ -4,15 +4,15 @@
     <li class="nav-item">
         <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Blog</a>
     </li>
+     <li class="nav-item"> 
+        <a class="nav-link" href="#bottom"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
+    </li>
 {% endblock %}
 
 
 {% block externalinks %}
     <li class="nav-item">
         <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('contact') }}"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
     </li>
 {% endblock %}
 
@@ -23,25 +23,16 @@
 {% endblock %}
 
 
+{% block introtext %}
+    <p class="tm-intro-text">Welcome to my gallery</p>
+    {# we display flash message wich name is « notice » #}
+    {% for message in app.session.flashbag.get('notice') %}
+        <p> {{ message }}</p>
+    {% endfor %}
+    <a href="#tm-main-section" class="tm-intro-link"><i class="fa fa-caret-down"></i></a>
+{% endblock %}    
 
 {% block body %}
-    <div class="row">
-        <div class="tm-intro">
-            <section>                        
-                <div class="tm-container text-xs-center tm-section-1-inner">
-                    <img src="{{ asset('bundles/app/img/tm-lumino-logo.png') }}" alt="Logo" class="tm-logo">
-                    <h1 class="tm-site-name">Lumino</h1>
-                    <p class="tm-intro-text">Free Bootstrap 4.0 Website Template</p>
-                    {# we display flash message wich name is « notice » #}
-                    {% for message in app.session.flashbag.get('notice') %}
-                        <p> {{ message }}</p>
-                    {% endfor %}
-                    <a href="#tm-main-section" class="tm-intro-link">Begin</a>    
-                </div>                                               
-            </section>
-        </div>
-    </div>
-
     <div class="row gray-bg">  
 
         <div id="tm-main-section" class="tm-section">
@@ -74,4 +65,12 @@
         </div>
 
     </div> <!-- row -->
+{% endblock %}
+
+{% block contact %}
+    {{ include("navigation/contactmodal.html.twig") }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/app/js/contact.js') }}"></script>
 {% endblock %}

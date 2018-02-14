@@ -1,34 +1,3 @@
-{% extends 'base.html.twig' %}
-
-{% block links %}
-    <li class="nav-item">
-        <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Contact</a>
-    </li>
-{% endblock %}
-
-{% block externalinks %}
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
-    </li>
-{% endblock %}
-
-{% block body %}
-    <div class="row">
-        <div class="tm-intro">
-            <section>                        
-                <div class="tm-container text-xs-center tm-section-1-inner">
-                    <img src="bundles/app/img/tm-lumino-logo.png" alt="Logo" class="tm-logo">
-                    <h1 class="tm-site-name">Lumino</h1>
-                    <p class="tm-intro-text">Free Bootstrap 4.0 Website Template</p>
-                    <a href="#tm-main-section" class="tm-intro-link">Begin</a>    
-                </div>                                               
-            </section>
-        </div>  
-    </div> 
-
     <div class="row gray-bg">
 
         <section id="tm-main-section" class="tm-section">
@@ -36,7 +5,13 @@
 
                 <h2 class="blue-text tm-title text-xs-center">Contact Us</h2>
 
+                <div id="result">
+                        <!-- jQuery result -->
+                </div>
+
                  {% include('navigation/form.html.twig') %}
+
+                 
                       
                  <!--<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                     <form action="" method="post" class="tm-contact-form">  
@@ -73,4 +48,3 @@
             </div>                    
         </section>
     </div> <!-- row -->
-{% endblock %}

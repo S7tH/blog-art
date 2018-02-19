@@ -1,0 +1,40 @@
+    <div class="row gray-bg" id="blog">    
+        <div class="tm-section">
+            <div class="tm-container tm-container-wide">
+            
+            {% if pagination is empty %}
+                <p class="msg-flash"> Il n y a pas de contenu concernant le blog sur cette page</p>
+            {% else %}
+                {# display navigation #}
+                <div id="blogpage" class="navigation text-xs-center">
+                    <a class="tm-footer-contact" id="gallerybtn" href="#"><i class="fa fa-paint-brush" aria-hidden="true"></i> Afficher la version Gallery</a>
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+                {% for article in pagination %}
+                
+                    <div class="tm-news-item">
+                         
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 {% if loop.index0 % 2 %}flex-order-2{% endif %} tm-news-item-img-container">
+                           {% if article.mainImage != null %}
+                                <img src="{{ asset(article.mainImage) }}" alt="" class="img-fluid tm-news-item-img"> 
+                            {% else %}
+                                <img src="{{ asset('bundles/app/img/tm-600x300-02.jpg') }}" alt="Image" class="img-fluid tm-news-item-img">      
+                            {% endif %}    
+                        </div>
+                        
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-news-container flex-order-1">
+                            <h2 class="tm-news-title dark-gray-text">{{ article.title|upper }}</h2>
+                            <p class="tm-news-text">{{ article.subtitle }}</p>
+                            <a href="{{ path('article', {'id':article.id}) }}" class="btn tm-light-blue-bordered-btn tm-news-link">Voir l'article</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                {# display navigation #}
+                <div id="blogpage" class="navigation text-xs-center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            {% endif %}
+
+            </div>    
+        </div>
+    </div>

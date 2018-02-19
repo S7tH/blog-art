@@ -160,6 +160,20 @@ button:focus { outline: none; }
 	color: #8b72a7;
 }
 
+.loginout{
+	background: none;
+	color: #8b72a7;
+	padding: 15px 60px; 
+	display: inline-block;
+	border: none;
+	font-size: 24px;
+}
+
+.loginout:hover,
+.loginout:focus{
+	color:  white;
+}
+
 
 .gray-bg { background-color: #0f0f1b; border-top: 2px ridge silver;}
 .dark-gray-text { color: #666666; }
@@ -342,8 +356,12 @@ button:focus { outline: none; }
 }
 
 .tm-gallery-img {
-	width: 98%;
+	margin:auto;
 	height: 200px;
+}
+
+.tm-gallery-imgbck {
+	background: url(../img/bckgnews.jpg) no-repeat;
 }
 
 .tm-gallery-desc {
@@ -446,6 +464,28 @@ body.page-2 { padding-top: 80px; }
 .tm-description-box { padding: 6%; }
 .tm-description-text { margin-bottom: 1.5em; }
 .tm-footer-text { margin-bottom: 1.5rem; }
+
+.page-link{
+
+	background-color: #362e48;
+	color: #8b72a7;
+	text-shadow: 1px 1px 1px black;
+}
+
+.page-item.active .page-link, .page-item.active .page-link:focus, .page-item.active .page-link:hover {
+
+	background-color: #fff;
+	color:#362e48;
+	font-weight: bold;
+    border-color: #362e48;
+}
+
+.page-item.disabled .page-link, .page-item.disabled .page-link:focus, .page-item.disabled .page-link:hover {
+	color: #fff;
+	font-weight: bold;
+    background-color: #8b72a7;
+    border-color: #ddd;
+}
 
 @media (min-width: 768px) {
 
@@ -566,4 +606,3 @@ body.page-2 { padding-top: 80px; }
 	visibility:hidden;
 	height: 0px;
 }
-

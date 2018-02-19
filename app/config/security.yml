@@ -29,6 +29,8 @@ security:
                 provider: main
                 login_path: /login
                 check_path: /login_check
+                always_use_default_target_path: false
+                use_referer: true
             oauth:
                 resource_owners:
                     facebook:      /login/check-facebook

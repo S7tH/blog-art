@@ -1,186 +1,36 @@
-{% extends 'base.html.twig' %}
-
-{% block links %}
-    <li class="nav-item">
-        <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Gallerie</a>
-    </li>
-    <li class="nav-item"> 
-        <a class="nav-link" href="#bottom"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
-    </li>
-{% endblock %}
-
-{% block externalinks %}
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
-    </li>
-{% endblock %}
-
-{% block admin %}
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('article_new') }}"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> Créer un article</a>
-    </li>
-{% endblock %}
-
-{% block introtext %}
-    <h1 class="tm-site-name">Lumdfo</h1>
-    <p class="tm-intro-text">Free Bootstrap 4.0 Website Template</p>
-    <a href="#tm-main-section" class="tm-intro-link">Begin</a>
-{% endblock %}    
-
-{% block body %}
-
-    <div class="row">
-        <section id="tm-main-section" class="tm-section">
-            <div class="tm-container text-xs-center">    
-                <h2 class="blue-text tm-title">Lorem ipsum dolor sit amet</h2>
-                <p class="margin-b-5">Etiam at rhoncus nisl. Nunc rutrum ac ante euismod cursus.</p>
-                <p>Suspendisse imperdiet feugiat massa nex iaculis.</p> 
-
+<div class="row gray-bg" id="gallery">
+    <section class="tm-section">   
+        <div class="tm-container text-xs-center">    
                 <div class="tm-img-grid">
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-01.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-01.jpg') }}" alt="Image" class="img-fluid tm-gallery-img"> <!-- 300x200 -->
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>   
-                    </div>
+                    {% if pagination is empty %}
+                        {% if articlelist|length == 0 %}
+                            <p class="msg-flash"> Il n y a pas encore de contenu concernant la gallerie</p>
+                        {% else %}
+                            <p class="msg-flash"> Il n y a pas de contenu concernant la gallerie sur cette page</p>
+                                                      
+                            <a href="{{ path('homepage')}}" class="tm-footer-contact">Aller à la première page</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="tm-footer-contact" id="blogbtn" href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Afficher la version Blog</a>
 
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-07.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-07.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">  
-                            </a>
+                        <div id="gallerypage" class="navigation text-xs-center">
+                            {{ knp_pagination_render(pagination) }}
                         </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>   
-                    </div>
 
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-02.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-02.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a> 
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>                          
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('img/tm-450x300-09.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-09.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-03.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-03.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-08.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-08.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/testgrd.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/testgrd.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-04.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-04.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>    
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-05.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-05.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-11.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-11.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/tm-450x300-06.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/tm-450x300-06.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-                    
-
-                    <div class="tm-gallery-img-container">
-                        <div class="tm-gallery-imgbck">
-                            <a href="{{ asset('bundles/app/img/Bart_Simpson.jpg') }}" class="tm-gallery-img-link">
-                                <img src="{{ asset('bundles/app/img/Bart_Simpson.jpg') }}" alt="Image" class="img-fluid tm-gallery-img">
-                            </a>
-                        </div>
-                        <div class="tm-gallery-desc">
-                            <a href="{{ path('homepage') }}"><span>Du texte</span></a>
-                        </div>
-                    </div>
-                 
+                        {% for article in pagination %}
+                            <div class="tm-gallery-img-container">
+                                <div class="tm-gallery-imgbck text-xs-center">
+                                    <a href="{{ asset(article.mainImage) }}" class="tm-gallery-img-link">
+                                        <img src="{{ asset(article.mainImage) }}" alt="Image" class="img-fluid tm-gallery-img"> <!-- 300x200 -->
+                                    </a>
+                                </div>
+                                <div class="tm-gallery-desc">
+                                    <a href="{{ path('article', {'id':article.id}) }}" class="external"><span>{{ article.title }}</span></a>
+                                </div>   
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
-            </div>
-        </section>
-
-    </div> <!-- row -->
-{% endblock %}
-
-{% block contact %}
-    {{ include("navigation/contactmodal.html.twig") }}
-{% endblock %}
-
-{% block javascripts %}
-    <script src="{{ asset('bundles/app/js/contact.js') }}"></script>
-{% endblock %}
+        </div>
+    </section>
+</div>

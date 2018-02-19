@@ -43,7 +43,7 @@
                             <ul class="nav navbar-nav">
                               
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#top"><i class="fa fa-angle-double-up"></i></a>
+                                    <a class="nav-link" id="doubleup" href="#top"><i class="fa fa-image"></i> Entête </i></a>
                                 </li>
                                 {% block links %} {% endblock %}
                                
@@ -64,11 +64,11 @@
                                 </li>
                                 {% else %}
                                 <li class="nav-item">
-                                   <a class="nav-link external" href="{{ path('fos_user_security_login') }}"><i class="fa fa-heartbeat" aria-hidden="true"></i> se connecter</a>
+                                    <button data-toggle="modal" data-backdrop="false" href="#connexionframe" class="loginout"><i class="fa fa-heartbeat" aria-hidden="true"></i> Se connecter</button>
                                 </li>
-                                
+
                                 <li class="nav-item">
-                                   <a class="nav-link external" href="{{ path('fos_user_registration_register') }}"><i class="fa fa-users" aria-hidden="true"></i> s'inscrire</a>
+                                    <button data-toggle="modal" data-backdrop="false" href="#registerframe" class="loginout"><i class="fa fa-users" aria-hidden="true"></i> S'inscrire</button>
                                 </li>
                                 {% endif %}
                                 {% endblock %} 
@@ -89,16 +89,16 @@
                     </div>                                               
                 </section>
             </div>
-        </div>
+        </div>          
         {% endblock %}
-
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
             <div class="row gray-bg">
                 <!-- footer -->
                 <footer class="tm-footer" id="bottom">                
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
-                        {% block contact %}
-                        {% endblock %}
+                        {% block contact %}{% endblock %}
+                        {% block loginout %}{% endblock %}
                         <br/>
                         <p class="text-xs-center tm-footer-text">Copyright &copy; {{ "now"|date("Y") }} Eloïne's Arts</p> 
                     </div>                
@@ -119,7 +119,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 
         <script src="{{ asset('bundles/app/js/template.js') }}"></script>
-        
+
+        <script src="{{ asset('bundles/app/js/Ajax-contact.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

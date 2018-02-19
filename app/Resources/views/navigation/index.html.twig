@@ -2,19 +2,23 @@
 
 {% block links %}
     <li class="nav-item">
-        <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Blog</a>
+        <a class="nav-link" id="blogstate" href="#tm-main-section"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Blog</a>
     </li>
-     <li class="nav-item"> 
-        <a class="nav-link" href="#bottom"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
-    </li>
-{% endblock %}
 
-
-{% block externalinks %}
     <li class="nav-item">
-        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
+        <a class="nav-link" id="gallerystate" href="#gallery"><i class="fa fa-paint-brush" aria-hidden="true"></i>Gallery</a>
+    </li>
+
+    <li class="nav-item"> 
+        <a class="nav-link" href="#bottom"><i class="fa fa-paw"></i> Pied de page</a>
+    </li>
+
+    <li class="nav-item">
+        <button data-toggle="modal" data-backdrop="false" href="#contact" class="loginout"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</button>
     </li>
 {% endblock %}
+
+
 
 {% block admin %}
     <li class="nav-item">
@@ -29,48 +33,28 @@
     {% for message in app.session.flashbag.get('notice') %}
         <p> {{ message }}</p>
     {% endfor %}
-    <a href="#tm-main-section" class="tm-intro-link"><i class="fa fa-caret-down"></i></a>
+    {% block btnintro %}
+        <a href="#tm-main-section" class="tm-intro-link"><i class="fa fa-caret-down"></i></a>
+    {% endblock %} 
 {% endblock %}    
 
 {% block body %}
-    <div class="row gray-bg">  
-
-        <div id="tm-main-section" class="tm-section">
-            <div class="tm-container tm-container-wide">
-            {% if articlelist is empty %}
-                <p class="msg-flash"> Il n y a pas encore de contenu </p>
-            {% else %}
-                {% for article in articlelist %}
-                
-                    <div class="tm-news-item">
-                         
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 {% if loop.index0 % 2 %}flex-order-2{% endif %} tm-news-item-img-container">
-                           {% if article.mainImage != null %}
-                                <img src="{{  asset(article.mainImage) }}" alt="" class="img-fluid tm-news-item-img"> 
-                            {% else %}
-                                <img src="{{ asset('bundles/app/img/tm-600x300-02.jpg') }}" alt="Image" class="img-fluid tm-news-item-img">      
-                            {% endif %}    
-                        </div>
-                        
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-news-container flex-order-1">
-                            <h2 class="tm-news-title dark-gray-text">{{ article.title|upper }}</h2>
-                            <p class="tm-news-text">{{ article.subtitle }}</p>
-                            <a href="{{ path('article', {'id':article.id}) }}" class="btn tm-light-blue-bordered-btn tm-news-link">Voir l'article</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-            </div>    
-        </div>
-
-    </div> <!-- row -->
+    <div id="tm-main-section">
+        {{ include("navigation/blog.html.twig") }}
+        {{ include("navigation/gallery.html.twig") }}
+    </div>
 {% endblock %}
 
 {% block contact %}
     {{ include("navigation/contactmodal.html.twig") }}
 {% endblock %}
 
+{% block loginout %}
+    {{ include("security/connexion.html.twig") }}
+    {{ include("security/register.html.twig") }}
+{% endblock %}
+  
 {% block javascripts %}
-    <script src="{{ asset('bundles/app/js/contact.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/dynamicblog.js') }}"></script>
+    <script>if({{page}} != null){$('.tm-intro').toggle();}</script>
 {% endblock %}

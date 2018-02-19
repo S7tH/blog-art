@@ -62,3 +62,7 @@ services:
         class: AppBundle\Services\FormCallManager
         arguments: ["@form.factory","@app.save"]
 
+    paginator.call:
+        class: AppBundle\Services\PaginatorCall
+        arguments: ["@knp_paginator"]
+

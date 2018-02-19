@@ -4,17 +4,20 @@
     <li class="nav-item">
         <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Description</a>
     </li>
+
+    <li class="nav-item"> 
+        <a class="nav-link" href="#bottom"><i class="fa fa-paw"></i> Pied de page</a>
+    </li>
+
+    <li class="nav-item">
+        <button data-toggle="modal" data-backdrop="false" href="#contact" class="loginout"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</button>
+    </li>
+    
 {% endblock %}
 
 {% block externalinks %}
     <li class="nav-item">
-        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('contact') }}"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
+        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i>Retour au Blog</a>
     </li>
 {% endblock %}
 
@@ -76,6 +79,14 @@
                 </p>
             </div>
         </div>
-    </div>
-               
+    </div>  
+{% endblock %}
+
+{% block contact %}
+    {{ include("navigation/contactmodal.html.twig") }}
+    {{ include("security/register.html.twig") }}
+{% endblock %}
+
+{% block loginout %}
+    {{ include("security/connexion.html.twig") }} 
 {% endblock %}

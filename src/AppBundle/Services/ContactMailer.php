@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use AppBundle\Entity\Contact;
 
+
 class ContactMailer
 {
     private $formfactory;
@@ -41,10 +42,15 @@ class ContactMailer
                 ->setTo($contact->getToEmail())
                 ->setBody($contact->geTbody());
                 
-            $this->mailer->send($message);
+            $send = $this->mailer->send($message);
 
-            $request->getSession()->getFlashBag()->add('notice', 'Votre email a bien été envoyé');
-            return false;
+            if($send === false){
+                return $response = false;
+            }
+            else{
+                return $response = 'success';
+            }
+            
         }
         return $form;
     }

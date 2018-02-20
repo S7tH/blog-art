@@ -1,0 +1,25 @@
+<div class="row">
+    <div id="tm-section-1" class="tm-section">
+        <div class="col-md-12">
+            <div> 
+            {# display the flash  messages that define the bundle controllers #}
+            {% for key, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ key }}">
+                        {{ message|trans({}, 'FOSUserBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {# define this block wich will get to insert the bundle other views #}
+            {% block fos_user_content %}
+
+                {% block fos_user_security_logout %}
+                {% endblock %}
+                    
+            {% endblock fos_user_content %}
+            </div>
+        </div>
+    </div>
+</div>
+

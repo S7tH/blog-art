@@ -1,0 +1,36 @@
+<div class="row gray-bg" id="gallery">
+    <section class="tm-section">   
+        <div class="tm-container text-xs-center">    
+                <div class="tm-img-grid">
+                    {% if pagination is empty %}
+                        {% if articlelist|length == 0 %}
+                            <p class="msg-flash"> Il n y a pas encore de contenu concernant la gallerie</p>
+                        {% else %}
+                            <p class="msg-flash"> Il n y a pas de contenu concernant la gallerie sur cette page</p>
+                                                      
+                            <a href="{{ path('homepage')}}" class="tm-footer-contact">Aller à la première page</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="tm-footer-contact" id="blogbtn" href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Afficher la version Blog</a>
+
+                        <div id="gallerypage" class="navigation text-xs-center">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+
+                        {% for article in pagination %}
+                            <div class="tm-gallery-img-container">
+                                <div class="tm-gallery-imgbck text-xs-center">
+                                    <a href="{{ asset(article.mainImage) }}" class="tm-gallery-img-link">
+                                        <img src="{{ asset(article.mainImage) }}" alt="Image" class="img-fluid tm-gallery-img"> <!-- 300x200 -->
+                                    </a>
+                                </div>
+                                <div class="tm-gallery-desc">
+                                    <a href="{{ path('article', {'id':article.id}) }}" class="external"><span>{{ article.title }}</span></a>
+                                </div>   
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        </div>
+    </section>
+</div>

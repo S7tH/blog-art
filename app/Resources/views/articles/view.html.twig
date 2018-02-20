@@ -4,17 +4,20 @@
     <li class="nav-item">
         <a class="nav-link" href="#tm-main-section"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Description</a>
     </li>
+
+    <li class="nav-item"> 
+        <a class="nav-link" href="#bottom"><i class="fa fa-paw"></i> Pied de page</a>
+    </li>
+
+    <li class="nav-item">
+        <button data-toggle="modal" data-backdrop="false" href="#contact" class="loginout"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</button>
+    </li>
+    
 {% endblock %}
 
 {% block externalinks %}
     <li class="nav-item">
-        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('contact') }}"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
+        <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i>Retour au Blog</a>
     </li>
 {% endblock %}
 
@@ -26,7 +29,8 @@
                 <p class="text-xs-center tm-page-2-p tm-page-2-subtitle">
                     {{ article.subtitle }}
                 </p>
-                <img src="{{ asset('bundles/app/img/tm-1800x600-01.jpg') }}" class="img-fluid tm-banner-img" alt="Image">            
+                <img src="{{ asset('bundles/app/img/tm-1800x600-01.jpg') }}" class="img-fluid tm-banner-img" alt="Image">      
+    
             </div>
         </div>                
     </div>
@@ -39,11 +43,50 @@
                 </p>
 
                 <div class="tm-flex-center">
+
+                    <button data-toggle="modal" data-backdrop="false" href="#infos" class="btn btn-default btn-lg tm-gray-btn">Supprimer l'article</button>
+                    <div class="modal" id="infos">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                    <h4 class="modal-title">Êtes vous certains de vouloir supprimer définitivement cet article ?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <a href="{{ path('article_delete', {'id':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Oui supprimer cet article</a>
+                                    <button type="button" class="btn btn-default btn-lg tm-gray-btn" data-dismiss="modal">Non ne pas le supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <a href="{{ path('article_edit', {'id':article.id}) }}" class="btn btn-default btn-lg tm-gray-btn">Modifier l'article</a>
-                    <a href="{{ path('article_delete', {'id':article.id, 'state':'confirm'}) }}" class="btn btn-default btn-lg tm-gray-btn">Supprimer l'article</a>
                     <a href="{{ path('homepage') }}" class="btn btn-default btn-lg tm-gray-btn">Retourner à l'accueil</a>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="tm-section" id="tm-second-section">
+            <div class="col-md-12">
+                <p class="text-left tm-description">
+                    {{ include('Commentaries/index.html.twig') }}
+                    {% if is_granted('ROLE_USER') %}
+                        {{ include('Commentaries/add.html.twig') }}
+                     {% else %}
+                        Connectez vous pour laisser un message :)
+                     {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>  
+{% endblock %}
+
+{% block contact %}
+    {{ include("navigation/contactmodal.html.twig") }}
+    {{ include("security/register.html.twig") }}
+{% endblock %}
+
+{% block loginout %}
+    {{ include("security/connexion.html.twig") }} 
 {% endblock %}

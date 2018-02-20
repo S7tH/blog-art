@@ -7,7 +7,7 @@ services:
     # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services
-        autowire: true
+        autowire: false
         # automatically registers your services as commands, event subscribers, etc.
         autoconfigure: true
         # this means you cannot fetch services directly from the container via $container->get()
@@ -33,3 +33,36 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    # src/OC/PlatformBundle/Resources/config/services.yml
+
+    app.antispam:
+        class: AppBundle\Services\Antispam
+    
+    app.contact_mailer:
+        class: AppBundle\Services\ContactMailer
+        arguments: ["@form.factory","@mailer"]
+    
+    app.save:
+        class: AppBundle\Services\DBSave
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    app.commentaries:
+        class: AppBundle\Services\Commentaries
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    socials.call:
+        class: AppBundle\Services\SocialsCall
+        arguments: ["@router", "%facebook_client_id%", "%facebook_client_secret%", "%google_client_id%", "%google_client_secret%"]
+    
+    hwifos_user_provider:
+        class: AppBundle\Security\Core\User\FosUBUserProvider
+        arguments: ["@fos_user.user_manager", { facebook: facebook_id, google: google_id },"@socials.call"]
+
+    formcall.manager:
+        class: AppBundle\Services\FormCallManager
+        arguments: ["@form.factory","@app.save"]
+
+    paginator.call:
+        class: AppBundle\Services\PaginatorCall
+        arguments: ["@knp_paginator"]
+

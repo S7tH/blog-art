@@ -8,12 +8,6 @@
 
 {% block externalinks %}
     <li class="nav-item">
-        <a class="nav-link external" href="{{ path('gallery') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Gallery</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link external" href="{{ path('contact') }}"><i class="fa fa-pencil" aria-hidden="true"></i> Contact</a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link external" href="{{ path('homepage') }}"><i class="fa fa-reply-all" aria-hidden="true"></i> Blog</a>
     </li>
 {% endblock %}
@@ -36,33 +30,11 @@
     <section id="tm-main-section" class="tm-section">
             <div class="tm-container">
                 <div class="col-xs-12 article-big-title"><h3>{% block formtitle %}{% endblock %}</h3></div>
-
+                                
                 {% include('articles/form.html.twig') %}
             
                 <a href="{{ path('homepage') }}" class="btn btn-primary">Retour à la liste des tâches</a>
             </div>
     </section>
 </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
-
-    <script>
-        CKEDITOR.replace('article[description]',{
-            skin: 'moono-dark,{{ asset('bundles/app/ckeditor/skins/moono-dark/')}}',
-            customConfig: '{{ asset('bundles/app/ckeditor/config.js')}}',
-            extraPlugins: 'youtube,video,videoembed'
-        });
-    </script>
-
-    <script>
-        CKEDITOR.plugins.addExternal( 'youtube', '{{ asset('bundles/app/ckeditor/plugins/youtube/')}}', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'video', '{{ asset('bundles/app/ckeditor/plugins/video/')}}', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'videoembed', '{{ asset('bundles/app/ckeditor/plugins/videoembed/')}}', 'plugin.js' );
-    </script>
-
-    <script type="text/javascript" src="{{ asset('bundles/cksourceckfinder/ckfinder/ckfinder.js')}}"></script>
-
-
 {% endblock %}

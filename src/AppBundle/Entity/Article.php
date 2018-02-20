@@ -63,6 +63,14 @@ class Article
     private $dateUpdate;
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="main_image", type="string", length=255, nullable=true)
+     */
+    private $mainImage;
+
+    
     public function __construct()
     {
         $this->date = new \Datetime();
@@ -197,5 +205,33 @@ class Article
     {
         return $this->dateUpdate;
     }
+
+
+    /**
+     * Get mainImage
+     *
+     * @return string
+     */
+    public function getMainImage()
+    {
+        return $this->mainImage;
+    }
+
+    /**
+     * Set mainImage
+     *
+     * @param string $mainImage
+     *
+     * @return Article
+     */
+    public function setMainImage($mainImage)
+    {
+        $this->mainImage = $mainImage;
+
+        return $this;
+    }
 }
+
+
+
 
